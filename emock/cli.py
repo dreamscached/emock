@@ -5,9 +5,11 @@ import typing
 _Dimensions = typing.Tuple[int, int]
 
 
-# noinspection PyTypeChecker
 def dimension(arg: str) -> _Dimensions:
-    return tuple(map(int, arg.split("x")))
+    v = tuple(map(int, arg.split("x")))
+    if len(v) != 2:
+        raise ValueError("dimension must be two numbers separated by x (like 8x4)")
+    return v[0], v[1]
 
 
 _parser = argparse.ArgumentParser(
