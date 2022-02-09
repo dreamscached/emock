@@ -11,9 +11,9 @@ def dimension(arg: str) -> _Dimensions:
 
 
 _parser = argparse.ArgumentParser(
-    prog="blouc", description="convert image into square emote mosaic")
+    prog="emock", description="convert image into square emote mosaic")
 _parser.add_argument(
-    "image", type=pathlib.Path, help="path to image to convert to blocks")
+    "image", type=pathlib.Path, help="path to image to convert")
 _parser.add_argument(
     "-b", "--bubblewrap", action="store_true", help="wrap block emotes into spoilers")
 _parser.add_argument(
