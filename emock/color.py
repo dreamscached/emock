@@ -6,7 +6,7 @@ import functools
 Pixel = typing.Tuple[int, int, int]
 Color = collections.namedtuple("Color", ("r", "g", "b"))
 
-_block_map: typing.List[typing.Tuple[str, Color]] = [
+_blocks: typing.List[typing.Tuple[str, Color]] = [
     ("green", Color(r=0x7c, g=0xb3, b=0x42)),
     ("brown", Color(r=0xb7, g=0x6d, b=0x54)),
     ("blue", Color(r=0x21, g=0x96, b=0xf3)),
@@ -21,7 +21,7 @@ _block_map: typing.List[typing.Tuple[str, Color]] = [
 @functools.lru_cache(maxsize=1000)
 def get_block(rgb: Color) -> str:
     return sorted(
-        map(lambda it: (it[0], _color_distance(rgb, it[1])), _block_map),
+        map(lambda it: (it[0], _color_distance(rgb, it[1])), _blocks),
         key=lambda it: it[1])[0][0]
 
 
