@@ -1,23 +1,32 @@
 import math
 import typing
+import collections
+import functools
 
-Color = typing.Tuple[int, int, int]
+Pixel = typing.Tuple[int, int, int]
+Color = collections.namedtuple("Color", ("r", "g", "b"))
 
-_square_map: typing.Dict[str, Color] = dict(
-    green=(0x7c, 0xb3, 0x42),
-    brown=(0xb7, 0x6d, 0x54),
-    blue=(0x21, 0x96, 0xf3),
-    red=(0xf4, 0x43, 0x36),
-    purple=(0xab, 0x47, 0xbc),
-    orange=(0xff, 0x98, 0x00),
-    yellow=(0xff, 0xcc, 0x32),
-    black_large=(0x42, 0x42, 0x42),
-    white_large=(0xe0, 0xe0, 0xe0))
-
-
-def get_square(rgb: Color) -> str:
-    return sorted(map(lambda it: (it[0], _dist(rgb, it[1])), _square_map.items()), key=lambda it: it[1])[0][0]
+_block_map: typing.List[typing.Tuple[str, Color]] = [
+    ("green", Color(r=0x7c, g=0xb3, b=0x42)),
+    ("brown", Color(r=0xb7, g=0x6d, b=0x54)),
+    ("blue", Color(r=0x21, g=0x96, b=0xf3)),
+    ("red", Color(r=0xf4, g=0x43, b=0x36)),
+    ("purple", Color(r=0xab, g=0x47, b=0xbc)),
+    ("orange", Color(r=0xff, g=0x98, b=0x00)),
+    ("yellow", Color(r=0xff, g=0xcc, b=0x32)),
+    ("black_large", Color(r=0x42, g=0x42, b=0x42)),
+    ("white_large", Color(r=0xe0, g=0xe0, b=0xe0))]
 
 
-def _dist(c1: Color, c2: Color) -> float:
-    return math.sqrt(math.pow(c1[0] - c2[0], 2) + math.pow(c1[1] - c2[1], 2) + math.pow(c1[2] - c2[2], 2))
+@functools.lru_cache(maxsize=1000)
+def get_block(rgb: Color) -> str:
+    return sorted(
+        map(lambda it: (it[0], _color_distance(rgb, it[1])), _block_map),
+        key=lambda it: it[1])[0][0]
+
+
+def _color_distance(px: Pixel, c2: Color) -> float:
+    return math.sqrt(
+        math.pow(px[0] - c2.r, 2) +
+        math.pow(px[1] - c2.g, 2) +
+        math.pow(px[2] - c2.b, 2))
