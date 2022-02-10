@@ -18,7 +18,7 @@ _blocks: typing.List[typing.Tuple[str, Color]] = [
     ("white_large", Color(r=0xe0, g=0xe0, b=0xe0))]
 
 
-@functools.lru_cache(maxsize=1000)
+@functools.lru_cache(maxsize=1024)
 def get_block(rgb: Color) -> str:
     return sorted(
         map(lambda it: (it[0], _color_distance(rgb, it[1])), _blocks),

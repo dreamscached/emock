@@ -5,7 +5,7 @@ import typing
 _Dimensions = typing.Tuple[int, int]
 
 
-def dimension(arg: str) -> _Dimensions:
+def _dimension(arg: str) -> _Dimensions:
     v = tuple(map(int, arg.split("x")))
     if len(v) != 2:
         raise ValueError("dimension must be two numbers separated by x (like 8x4)")
@@ -18,7 +18,10 @@ _parser.add_argument(
     "image", type=pathlib.Path, help="path to image to convert")
 _parser.add_argument(
     "-b", "--bubblewrap", action="store_true", help="wrap block emotes into spoilers")
-_parser.add_argument(
-    "-s", "--size", type=dimension, default=(8, 4), help="dimensions of output blocky art")
+_dim_mux = _parser.add_mutually_exclusive_group()
+_dim_mux.add_argument(
+    "-s", "--size", type=_dimension, default=(8, 4), help="dimensions of output blocky art")
+_dim_mux.add_argument(
+    "-n", "--no-resize", action="store_true", help="do not resize image")
 
 args = _parser.parse_args()
