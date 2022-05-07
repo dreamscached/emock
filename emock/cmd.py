@@ -14,7 +14,6 @@ async def run_with_args(args: argparse.Namespace) -> None:
 
     print("\n".join("".join(_process_block(color.get_block(rgb.getpixel((x, y))), args)
                             for x in range(rgb.width)) for y in range(rgb.height)))
-    print(color.get_block.cache_info())
 
 
 def _process_block(block: str, args: argparse.Namespace) -> str:
