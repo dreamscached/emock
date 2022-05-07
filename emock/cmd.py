@@ -1,4 +1,5 @@
 import argparse
+import typing
 
 from PIL import Image
 from emock import color
@@ -16,8 +17,11 @@ async def run_with_args(args: argparse.Namespace) -> None:
                             for x in range(rgb.width)) for y in range(rgb.height)))
 
 
-def _process_block(block: str, args: argparse.Namespace) -> str:
-    res = [":", block, "_square", ":"]
+def _process_block(block: typing.Tuple[str, str], args: argparse.Namespace) -> str:
+    if not args.emoji:
+        res = [":", block[0], ":"]
+    else:
+        res = [block[1]]
 
     if args.bubblewrap:
         res.insert(0, "||")

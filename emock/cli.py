@@ -18,6 +18,9 @@ _parser.add_argument(
     "image", type=pathlib.Path, help="path to image to convert")
 _parser.add_argument(
     "-b", "--bubblewrap", action="store_true", help="wrap block emotes into spoilers")
+_parser.add_argument(
+    "-e", "--emoji", action="store_true", help="print emooji instead of colon codes")
+
 _dim_mux = _parser.add_mutually_exclusive_group()
 _dim_mux.add_argument(
     "-s", "--size", type=_dimension, default=(8, 4), help="dimensions of output blocky art")
